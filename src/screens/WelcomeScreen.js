@@ -1,8 +1,8 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
-import { View, Text, AsyncStorage } from 'react-native';
-import Slides from '../components/Slides';
 import { AppLoading } from 'expo';
+import { View, AsyncStorage } from 'react-native';
+import Slides from '../components/Slides';
 
 const SLIDE_DATA = [
   {
@@ -10,7 +10,7 @@ const SLIDE_DATA = [
     color: '#03a9f4'
   },
   {
-    text: 'Suck my balls',
+    text: 'Use this app to find a job',
     color: '#009688'
   },
   {
