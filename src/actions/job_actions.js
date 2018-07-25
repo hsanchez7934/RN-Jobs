@@ -2,9 +2,11 @@ import axios from 'axios';
 import reverseGeocode from 'latlng-to-zip';
 import qs from 'qs';
 import apiKeys from '../apiKeys';
+import mockData from '../mockData';
 
 import {
-  FETCH_JOBS
+  FETCH_JOBS,
+  LIKE_JOB
 } from './types';
 
 const JOB_ROOT_URL = `https://api.indeed.com/ads/apisearch?`;
@@ -32,12 +34,17 @@ export const fetchJobs = (region, callback) => async dispatch => {
     // eslint-disable-next-line
     let zipCode = await reverseGeocode(region);
     const url = buildJobsUrl(zipCode);
+    console.log(url);
     // eslint-disable-next-line
-    let { data } = await axios.get(url);
-    console.log(data);
-    dispatch(fetchJobsAction(data));
+    // let { data } = await axios.get(url);    this piece of code fetches data from indeed api - couldn't get api key
+    dispatch(fetchJobsAction(mockData));
     callback();
   } catch (error) {
     console.log(error);
   }
 };
+
+export const likeJob = job => ({
+  type: LIKE_JOB,
+  payload: job
+});
