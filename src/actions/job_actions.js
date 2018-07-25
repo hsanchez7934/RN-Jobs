@@ -27,7 +27,7 @@ const buildJobsUrl = zipCode => {
   return `${JOB_ROOT_URL}${query}`;
 };
 
-export const fetchJobs = region => async dispatch => {
+export const fetchJobs = (region, callback) => async dispatch => {
   try {
     // eslint-disable-next-line
     let zipCode = await reverseGeocode(region);
@@ -36,6 +36,7 @@ export const fetchJobs = region => async dispatch => {
     let { data } = await axios.get(url);
     console.log(data);
     dispatch(fetchJobsAction(data));
+    callback();
   } catch (error) {
     console.log(error);
   }

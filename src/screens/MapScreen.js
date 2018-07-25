@@ -30,7 +30,8 @@ class MapScreen extends Component {
   }
 
   onButtonPress = () => {
-    this.props.fetchJobs(this.state.region);
+    this.props.fetchJobs(this.state.region, () =>
+    this.props.navigation.navigate('Deck'));
   }
 
   render() {
@@ -72,7 +73,7 @@ const styles = StyleSheet.create({
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchJobs: (region) => dispatch(actions.fetchJobs(region))
+  fetchJobs: (region, callback) => dispatch(actions.fetchJobs(region, callback))
 });
 
 export default connect(null, mapDispatchToProps)(MapScreen);
