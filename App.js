@@ -26,6 +26,11 @@ const MainNavigator = createBottomTabNavigator({
       }
     })
   }
+}, {
+  lazy: true,
+  navigationOptions: {
+    tabBarVisible: false
+  }
 });
 
 export default class App extends React.Component {

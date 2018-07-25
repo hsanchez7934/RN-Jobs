@@ -11,12 +11,12 @@ import {
 //AsyncStorage.getItem('fb_token');
 
 //Action Creators
-const facebookLoginSuccessActionCreator = loginToken => ({
+const facebookLoginSuccessAction = loginToken => ({
   type: FACEBOOK_LOGIN_SUCCESS,
   payload: loginToken
 });
 
-const facebookLoginFailActionCreator = () => ({
+const facebookLoginFailAction = () => ({
   type: FACEBOOK_LOGIN_FAIL
 });
 
@@ -25,7 +25,7 @@ export const facebookLogin = () => async dispatch => {
   let token = await AsyncStorage.getItem('fb_token');
   if (token) {
     // Dispatch an action saying FB login is done
-    dispatch(facebookLoginSuccessActionCreator(token));
+    dispatch(facebookLoginSuccessAction(token));
   } else {
     // Start up FB login process
     doFacebookLogin(dispatch);
@@ -40,9 +40,9 @@ const doFacebookLogin = async dispatch => {
   });
 
   if (type === 'cancel') {
-    dispatch(facebookLoginFailActionCreator());
+    dispatch(facebookLoginFailAction());
   }
 
   await AsyncStorage.setItem('fb_token', token);
-  dispatch(facebookLoginSuccessActionCreator(token));
+  dispatch(facebookLoginSuccessAction(token));
 };
