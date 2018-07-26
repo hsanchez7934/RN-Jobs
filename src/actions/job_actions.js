@@ -6,7 +6,8 @@ import mockData from '../mockData';
 
 import {
   FETCH_JOBS,
-  LIKE_JOB
+  LIKE_JOB,
+  CLEAR_LIKED_JOBS
 } from './types';
 
 const JOB_ROOT_URL = `https://api.indeed.com/ads/apisearch?`;
@@ -47,4 +48,8 @@ export const fetchJobs = (region, callback) => async dispatch => {
 export const likeJob = job => ({
   type: LIKE_JOB,
   payload: job
+});
+
+export const clearLikedJobs = () => ({
+  type: CLEAR_LIKED_JOBS
 });

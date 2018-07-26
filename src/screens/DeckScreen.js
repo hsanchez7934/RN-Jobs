@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Platform } from 'react-native';
 import { connect } from 'react-redux';
-import { Card, Button } from 'react-native-elements';
-import Swipe from '../components/Swipe';
+import { Card, Button, Icon } from 'react-native-elements';
 import { MapView } from 'expo';
+import Swipe from '../components/Swipe';
 import * as actions from '../actions';
 
 class DeckScreen extends Component {
+  static navigationOptions = {
+    title: 'Jobs',
+    tabBarIcon: ({ tintColor }) => <Icon name="description" size={25} color={tintColor} />
+  }
 
   renderCard = (job) => {
     const {
@@ -30,9 +34,9 @@ class DeckScreen extends Component {
 
         <View style={{ height: 300 }}>
           <MapView
-            scrollEnable={false}
+            scrollEnabled={false}
             style={{ flex: 1 }}
-            cacheEnabled={Platform.OS === 'android' ? true : false}
+            cacheEnabled={Platform.OS === 'android'}
             initialRegion={initialRegion}
           >
           </MapView>
@@ -52,24 +56,27 @@ class DeckScreen extends Component {
     );
   }
 
-  renderNoMoreCards = () => {
-    return (
+  renderNoMoreCards = () => (
       <Card title="No More Jobs">
-
+        <Button
+          title="Back To Map"
+          large icon={{ name: 'my-location' }}
+          backgroundColor="#03a9f4"
+          onPress={() => this.props.navigation.navigate('Map')}
+        />
       </Card>
-    );
-  }
+  );
 
   render() {
     return (
-      <View style={{ marginTop: 10 }}>
-        <Swipe
-          keyProp="jobkey"
-          data={this.props.jobs}
-          renderCard={this.renderCard}
-          renderNoMoreCards={this.renderNoMoreCards}
-          onSwipeRight={job => this.props.likeJob(job)}
-        />
+      <View style={styles.deckContainer}>
+          <Swipe
+            keyProp="jobkey"
+            data={this.props.jobs}
+            renderCard={this.renderCard}
+            renderNoMoreCards={this.renderNoMoreCards}
+            onSwipeRight={job => this.props.likeJob(job)}
+          />
       </View>
     );
   }
@@ -80,6 +87,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     marginBottom: 10
+  },
+  deckContainer: {
+     marginTop: 10,
+     backgroundColor: '#e5e6e8',
+     flex: 1
   }
 });
 

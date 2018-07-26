@@ -1,9 +1,12 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { View } from 'react-native';
 import { createBottomTabNavigator, createStackNavigator } from 'react-navigation';
 import { Provider } from 'react-redux';
+import { Icon } from 'react-native-elements';
+import { PersistGate } from 'redux-persist/integration/react';
 
 import store from './src/store';
+
 import AuthScreen from './src/screens/AuthScreen';
 import WelcomeScreen from './src/screens/WelcomeScreen';
 import MapScreen from './src/screens/MapScreen';
@@ -22,7 +25,15 @@ const MainNavigator = createBottomTabNavigator({
         screen: createStackNavigator({
           Review: { screen: ReviewScreen },
           Settings: { screen: SettingsScreen }
+        }),
+        navigationOptions: () => ({
+          title: 'Review Jobs',
+          tabBarIcon: ({ tintColor }) => <Icon name="favorite" size={25} color={tintColor} />
         })
+      }
+    }, {
+      tabBarOptions: {
+        labelStyle: { fontSize: 12 }
       }
     })
   }
@@ -36,10 +47,12 @@ const MainNavigator = createBottomTabNavigator({
 export default class App extends React.Component {
   render() {
     return (
-      <Provider store={store}>
-        <View style={{ flex: 1 }}>
-          <MainNavigator />
-        </View>
+      <Provider store={store().store}>
+        <PersistGate loading={null} persistor={store().persistor}>
+          <View style={{ flex: 1 }}>
+            <MainNavigator />
+          </View>
+        </PersistGate>
       </Provider>
     );
   }
